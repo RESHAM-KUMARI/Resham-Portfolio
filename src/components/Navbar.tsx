@@ -1,8 +1,8 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { SITE_CONFIG } from '@/lib/constants';
 import { FiMenu, FiX } from 'react-icons/fi';
 
@@ -10,8 +10,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
-  // Add scroll effect directly in component
+  // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -20,21 +21,41 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
+  const handleNavigation = (sectionId: string, sectionName: string) => {
+    setIsOpen(false);
+    
+    // Agar home page pe hai
+    if (pathname === '/') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } 
+    // Agar dusre page pe hai toh home page pe jaake scroll karo
+    else {
+      router.push(`/#${sectionId}`);
+      // Small delay to ensure page loads before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
   };
 
-  const isHomePage = pathname === '/';
-
   const navItems = [
-    { name: "Home", action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-    { name: "About", action: () => scrollToSection('about') },
-    { name: "Projects", action: () => scrollToSection('projects') },
-    { name: "Contact", action: () => scrollToSection('contact') },
+    { name: "Home", id: "home", action: () => {
+      if (pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        router.push('/');
+      }
+      setIsOpen(false);
+    }},
+    { name: "About", id: "about", action: () => handleNavigation('about', 'About') },
+    { name: "Projects", id: "projects", action: () => handleNavigation('projects', 'Projects') },
+    { name: "Contact", id: "contact", action: () => handleNavigation('contact', 'Contact') },
   ];
 
   return (
@@ -44,7 +65,13 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+              if (pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                router.push('/');
+              }
+            }}
             className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
           >
             {SITE_CONFIG.name.split(' ')[0]}
@@ -63,7 +90,7 @@ export default function Navbar() {
           </div>
 
           <button className="md:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <FiMenu /> : <FiX />}
+            {isOpen ? <FiX /> : <FiMenu />}
           </button>
         </div>
 
