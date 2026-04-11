@@ -36,7 +36,7 @@ export default function HeroSection() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 text-gray-800">
             Hi, I'm{' '}
             <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 bg-clip-text text-transparent">
-              Resham Kumari
+              Resham 
             </span>
           </h1>
           
