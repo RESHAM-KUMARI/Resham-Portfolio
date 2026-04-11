@@ -23,36 +23,36 @@ export default function HeroSection() {
   }, [fullText]);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center px-4 pt-16 bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16 py-12">
+    <section id="home" className="w-full bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16 px-4 py-8">
         
         {/* Left Side - Text Content */}
         <div className="flex-1 text-center md:text-left">
           {/* Badge */}
-          <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-6">
+          <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
             👋 Available for Work
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-gray-800">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 text-gray-800">
             Hi, I'm{' '}
             <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 bg-clip-text text-transparent">
               Resham Kumari
             </span>
           </h1>
           
-          <div className="text-xl sm:text-2xl md:text-3xl text-gray-600 mb-4 h-16 font-medium">
+          <div className="text-xl sm:text-2xl md:text-3xl text-gray-600 mb-3 h-16 font-medium">
             {text}
             <span className="animate-pulse text-blue-600">|</span>
           </div>
           
-          <p className="text-base sm:text-lg text-gray-600 max-w-lg mb-6 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-600 max-w-lg mb-5 leading-relaxed">
             Motivated Computer Science graduate with hands-on experience in Java Full Stack Development, 
             React.js, and REST API integration. Skilled in building responsive web applications and 
             implementing scalable solutions.
           </p>
           
           {/* Location and Contact Info */}
-          <div className="flex flex-wrap gap-4 mb-6 justify-center md:justify-start">
+          <div className="flex flex-wrap gap-4 mb-5 justify-center md:justify-start">
             <div className="flex items-center gap-2 text-gray-600 text-sm">
               <FiMapPin className="text-blue-600" />
               <span>Delhi NCR, India</span>
@@ -104,7 +104,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Right Side - Image (Fixed to show full image) */}
+        {/* Right Side - Image */}
         <div className="flex-1 flex justify-center">
           <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-white shadow-2xl">
             <Image

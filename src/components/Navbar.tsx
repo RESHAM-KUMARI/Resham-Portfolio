@@ -36,7 +36,7 @@ export default function Navbar() {
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); // Initial call
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
@@ -58,7 +58,7 @@ export default function Navbar() {
     if (pathname === '/') {
       const element = document.getElementById(sectionId);
       if (element) {
-        const offset = 70;
+        const offset = 80; // Navbar height offset
         const elementPosition = element.offsetTop - offset;
         window.scrollTo({ top: elementPosition, behavior: 'smooth' });
       }
@@ -86,24 +86,28 @@ export default function Navbar() {
   return (
     <>
       <nav 
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
           scrolled 
-            ? 'bg-white/95 backdrop-blur-md shadow-md' 
-            : 'bg-white/80 backdrop-blur-sm'
+            ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' 
+            : 'bg-white/80 backdrop-blur-sm py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center">
             {/* Logo */}
             <button 
               onClick={handleHomeClick}
-              className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              className="group relative text-2xl font-bold focus:outline-none"
+              aria-label="Go to home"
             >
-              {SITE_CONFIG.name.split(' ')[0]}
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient">
+                {SITE_CONFIG.name.split(' ')[0]}
+              </span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
             </button>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === '/' && activeSection === item.id;
@@ -112,14 +116,20 @@ export default function Navbar() {
                   <button
                     key={item.name}
                     onClick={item.action}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                    className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 group ${
                       isActive
                         ? 'text-blue-600 bg-blue-50'
                         : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                     }`}
+                    aria-label={item.name}
                   >
-                    <Icon className="text-base" />
+                    <Icon className={`text-lg transition-transform duration-300 group-hover:scale-110 ${
+                      isActive ? 'text-blue-600' : 'text-gray-500'
+                    }`} />
                     <span>{item.name}</span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
+                    )}
                   </button>
                 );
               })}
@@ -127,44 +137,47 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-all duration-300"
+              className="md:hidden relative w-10 h-10 rounded-lg flex items-center justify-center text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
             >
-              {isOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Overlay */}
         <div 
-          className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 md:hidden ${
+          className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-500 md:hidden ${
             isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
           }`}
           onClick={() => setIsOpen(false)}
         />
         
+        {/* Mobile Menu Drawer */}
         <div 
-          className={`fixed top-0 right-0 h-full w-64 bg-white shadow-xl transform transition-transform duration-300 ease-out z-50 md:hidden ${
+          className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl transform transition-transform duration-500 ease-out z-50 md:hidden ${
             isOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="flex flex-col h-full">
             {/* Mobile Menu Header */}
-            <div className="flex justify-between items-center p-4 border-b">
-              <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <div className="flex justify-between items-center p-6 border-b">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Menu
               </span>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600"
+                className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all"
+                aria-label="Close menu"
               >
-                <FiX size={20} />
+                <FiX size={24} />
               </button>
             </div>
             
             {/* Mobile Navigation Items */}
-            <div className="py-4 px-3">
-              <div className="space-y-1">
+            <div className="flex-1 py-8 px-6">
+              <div className="space-y-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === '/' && activeSection === item.id;
@@ -176,24 +189,36 @@ export default function Navbar() {
                         item.action();
                         setIsOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 group ${
                         isActive
-                          ? 'bg-blue-50 text-blue-600'
+                          ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600'
                           : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
                       }`}
                     >
-                      <Icon className="text-base" />
+                      <Icon className={`text-xl transition-transform duration-300 group-hover:scale-110 ${
+                        isActive ? 'text-blue-600' : 'text-gray-500'
+                      }`} />
                       <span>{item.name}</span>
+                      {isActive && (
+                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600"></div>
+                      )}
                     </button>
                   );
                 })}
               </div>
             </div>
+            
+            {/* Mobile Menu Footer */}
+            <div className="p-6 border-t">
+              <p className="text-xs text-center text-gray-500">
+                © {new Date().getFullYear()} {SITE_CONFIG.name}
+              </p>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Minimal spacer - exactly navbar height */}
+      {/* Spacer to prevent content from hiding under navbar */}
       <div className="h-16"></div>
     </>
   );
