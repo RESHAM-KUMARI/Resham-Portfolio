@@ -1,44 +1,43 @@
-import { ReactNode } from 'react';
+'use client';
+
+import Link from 'next/link';
 
 interface ButtonProps {
-  children: ReactNode;
-  variant?: 'primary' | 'outline' | 'ghost';
-  onClick?: () => void;
+  children: React.ReactNode;
   href?: string;
+  variant?: 'primary' | 'outline';
+  onClick?: () => void;
+  type?: 'button' | 'submit';
   className?: string;
-  type?: 'button' | 'submit' | 'reset';
 }
 
 export default function Button({ 
   children, 
-  variant = "primary", 
-  onClick, 
   href, 
-  className = '',
-  type = 'button'
+  variant = 'primary', 
+  onClick, 
+  type = 'button',
+  className = '' 
 }: ButtonProps) {
-  const baseStyles = "px-6 py-3 rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center gap-2";
+  const baseStyles = "inline-flex items-center justify-center px-6 py-2.5 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2";
   
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 shadow-lg",
-    outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 hover:scale-105",
-    ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+    primary: "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:shadow-lg hover:scale-105 focus:ring-blue-500",
+    outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 hover:scale-105 focus:ring-blue-500"
   };
-  
+
+  const combinedClassName = `${baseStyles} ${variants[variant]} ${className}`;
+
   if (href) {
     return (
-      <a href={href} className={`${baseStyles} ${variants[variant]} ${className}`}>
+      <Link href={href} className={combinedClassName}>
         {children}
-      </a>
+      </Link>
     );
   }
-  
+
   return (
-    <button 
-      type={type}
-      className={`${baseStyles} ${variants[variant]} ${className}`} 
-      onClick={onClick}
-    >
+    <button onClick={onClick} type={type} className={combinedClassName}>
       {children}
     </button>
   );
