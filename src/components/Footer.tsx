@@ -5,31 +5,27 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-800 text-white py-6">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-4">
           {/* Social Links */}
-          <div className="flex gap-6">
-            <a href={SITE_CONFIG.github} target="_blank" rel="noopener noreferrer" 
-               className="text-2xl hover:text-blue-400 transition">
-              <FaGithub />
+          <div className="flex gap-4">
+            <a href="https://github.com/RESHAM-KUMARI" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+              <FaGithub size={18} />
             </a>
-            <a href={SITE_CONFIG.linkedin} target="_blank" rel="noopener noreferrer"
-               className="text-2xl hover:text-blue-400 transition">
-              <FaLinkedin />
+            <a href="https://www.linkedin.com/in/resham-kumari-99619a21b/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition">
+              <FaLinkedin size={18} />
             </a>
-            <a href={SITE_CONFIG.twitter} target="_blank" rel="noopener noreferrer"
-               className="text-2xl hover:text-blue-400 transition">
-              <FaTwitter />
+            <a href="https://x.com/ReshamK17061138" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+              <FaTwitter size={18} />
             </a>
-            <a href={`mailto:${SITE_CONFIG.email}`}
-               className="text-2xl hover:text-blue-400 transition">
-              <FaEnvelope />
+            <a href="mailto:reshamkri682001@gmail.com" className="text-gray-400 hover:text-red-400 transition">
+              <FaEnvelope size={18} />
             </a>
           </div>
           
           {/* Copyright */}
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 text-xs">
             © {currentYear} {SITE_CONFIG.name}. All rights reserved.
           </p>
         </div>

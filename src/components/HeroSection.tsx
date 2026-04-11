@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { SITE_CONFIG } from '@/lib/constants';
-import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiDownload } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiDownload, FiTwitter } from 'react-icons/fi';
 
 export default function HeroSection() {
   const [text, setText] = useState('');
@@ -21,6 +21,17 @@ export default function HeroSection() {
     }, 100);
     return () => clearInterval(interval);
   }, [fullText]);
+
+  // PDF download handler
+  const handleDownloadResume = () => {
+    // Agar aapke paas actual PDF file hai public folder me
+    const link = document.createElement('a');
+    link.href = '/Resham Software Developer.pdf'; // Public folder me resume.pdf rakhein
+    link.download = 'Resham Software Developer.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <section id="home" className="w-full bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -46,9 +57,10 @@ export default function HeroSection() {
           </div>
           
           <p className="text-base sm:text-lg text-gray-600 max-w-lg mb-5 leading-relaxed">
-            Motivated Computer Science graduate with hands-on experience in Java Full Stack Development, 
-            React.js, and REST API integration. Skilled in building responsive web applications and 
-            implementing scalable solutions.
+            Software Engineer passionate about transforming ideas into reliable, scalable products. 
+            Proficient in <span className="font-semibold">Java</span>, JavaScript, React.js, and Spring Boot. 
+            Skilled in building high-performance systems and intuitive user experiences across 
+            backend and frontend stacks.
           </p>
           
           {/* Location and Contact Info */}
@@ -66,6 +78,7 @@ export default function HeroSection() {
           {/* Social Links and Buttons */}
           <div className="flex flex-wrap gap-4 justify-center md:justify-start items-center">
             <div className="flex gap-3">
+              {/* GitHub */}
               <a 
                 href="https://github.com/RESHAM-KUMARI" 
                 target="_blank" 
@@ -75,6 +88,8 @@ export default function HeroSection() {
               >
                 <FiGithub size={20} />
               </a>
+              
+              {/* LinkedIn */}
               <a 
                 href="https://www.linkedin.com/in/resham-kumari-99619a21b/" 
                 target="_blank" 
@@ -84,6 +99,19 @@ export default function HeroSection() {
               >
                 <FiLinkedin size={20} />
               </a>
+              
+              {/* Twitter/X */}
+              <a 
+                href="https://x.com/ReshamK17061138" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-all hover:scale-105"
+                aria-label="Twitter"
+              >
+                <FiTwitter size={20} />
+              </a>
+              
+              {/* Email */}
               <a 
                 href="mailto:reshamkri682001@gmail.com"
                 className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all hover:scale-105"
@@ -93,14 +121,14 @@ export default function HeroSection() {
               </a>
             </div>
             
-            <a 
-              href="/resume.pdf" 
-              download
+            {/* Download Resume Button */}
+            <button 
+              onClick={handleDownloadResume}
               className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-medium hover:shadow-lg transition-all hover:scale-105"
             >
               <FiDownload size={18} />
               Download Resume
-            </a>
+            </button>
           </div>
         </div>
 
