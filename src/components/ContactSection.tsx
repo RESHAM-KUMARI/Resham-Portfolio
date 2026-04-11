@@ -1,118 +1,69 @@
 'use client';
 
-import { useState } from 'react';
-import Button from '@/components/Button';
-import InputField from '@/components/InputField';
-import { SITE_CONFIG } from '@/lib/constants';
-import { FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiClock, FiPhone } from 'react-icons/fi';
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('loading');
-    
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      
-      if (res.ok) {
-        setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
-  };
-
   return (
-    <div className="max-w-6xl mx-auto px-4 py-20">
-      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Get In Touch</h1>
-      <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-        Have a project in mind? I'd love to hear about it. Let's work together!
-      </p>
-      
-      <div className="grid md:grid-cols-2 gap-12">
-        {/* Contact Info */}
-        <div className="space-y-6">
-          <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:shadow-md transition">
-            <FiMail className="text-2xl text-blue-600 mt-1" />
-            <div>
-              <h3 className="font-semibold">Email</h3>
-              <a href={`mailto:${SITE_CONFIG.email}`} className="text-gray-600 hover:text-blue-600">
-                {SITE_CONFIG.email}
-              </a>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:shadow-md transition">
-            <FiMapPin className="text-2xl text-blue-600 mt-1" />
-            <div>
-              <h3 className="font-semibold">Location</h3>
-              <p className="text-gray-600">Remote / Available Worldwide</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:shadow-md transition">
-            <FiPhone className="text-2xl text-blue-600 mt-1" />
-            <div>
-              <h3 className="font-semibold">Availability</h3>
-              <p className="text-gray-600">Open for freelance & full-time opportunities</p>
-            </div>
-          </div>
+    <section id="contact" className="py-16 bg-white">
+      <div className="max-w-6xl mx-auto px-4">
+        
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+            Get In Touch
+          </h2>
+          <div className="w-16 h-0.5 bg-gray-300 mx-auto mb-4"></div>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Have a project in mind? Let's work together!
+          </p>
         </div>
         
-        {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <InputField
-            label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+        {/* Contact Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
           
-          <InputField
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          {/* Phone */}
+          <div className="text-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition">
+            <div className="inline-flex p-3 bg-gray-100 rounded-full mb-4">
+              <FiPhone className="text-2xl text-gray-700" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">Phone</h3>
+            <a href="tel:8409199953" className="text-gray-600 hover:text-gray-800 text-sm">
+              8409199953
+            </a>
+          </div>
           
-          <InputField
-            label="Message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            textarea
-          />
+          {/* Email */}
+          <div className="text-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition">
+            <div className="inline-flex p-3 bg-gray-100 rounded-full mb-4">
+              <FiMail className="text-2xl text-gray-700" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">Email</h3>
+            <a href="mailto:reshamkri682001@gmail.com" className="text-gray-600 hover:text-gray-800 text-sm break-all">
+              reshamkri682001@gmail.com
+            </a>
+          </div>
           
-          <Button type="submit" className="w-full">
-            {status === 'loading' ? 'Sending...' : 'Send Message →'}
-          </Button>
+          {/* Location */}
+          <div className="text-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition">
+            <div className="inline-flex p-3 bg-gray-100 rounded-full mb-4">
+              <FiMapPin className="text-2xl text-gray-700" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">Location</h3>
+            <p className="text-gray-600 text-sm">Delhi NCR, India</p>
+            <p className="text-gray-500 text-xs mt-1">Remote / Available Worldwide</p>
+          </div>
           
-          {status === 'success' && (
-            <p className="text-green-600 text-center">Message sent successfully!</p>
-          )}
-          {status === 'error' && (
-            <p className="text-red-600 text-center">Something went wrong. Please try again.</p>
-          )}
-        </form>
+          {/* Availability */}
+          <div className="text-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition">
+            <div className="inline-flex p-3 bg-gray-100 rounded-full mb-4">
+              <FiClock className="text-2xl text-gray-700" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">Availability</h3>
+            <p className="text-gray-600 text-sm">Open for freelance</p>
+            <p className="text-gray-600 text-sm">& full-time opportunities</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
