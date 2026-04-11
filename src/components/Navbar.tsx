@@ -36,7 +36,7 @@ export default function Navbar() {
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
@@ -58,7 +58,7 @@ export default function Navbar() {
     if (pathname === '/') {
       const element = document.getElementById(sectionId);
       if (element) {
-        const offset = 80; // Navbar height offset
+        const offset = 64; // Fixed navbar height
         const elementPosition = element.offsetTop - offset;
         window.scrollTo({ top: elementPosition, behavior: 'smooth' });
       }
@@ -86,24 +86,23 @@ export default function Navbar() {
   return (
     <>
       <nav 
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 w-full z-50 transition-all duration-300 h-16 ${
           scrolled 
-            ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' 
-            : 'bg-white/80 backdrop-blur-sm py-5'
+            ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+            : 'bg-white/80 backdrop-blur-sm'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="flex justify-between items-center h-full">
             {/* Logo */}
             <button 
               onClick={handleHomeClick}
               className="group relative text-2xl font-bold focus:outline-none"
               aria-label="Go to home"
             >
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 {SITE_CONFIG.name.split(' ')[0]}
               </span>
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
             </button>
 
             {/* Desktop Navigation */}
@@ -218,7 +217,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Spacer to prevent content from hiding under navbar */}
+      {/* Fixed spacer - exactly navbar height */}
       <div className="h-16"></div>
     </>
   );
