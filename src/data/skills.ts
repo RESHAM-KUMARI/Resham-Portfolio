@@ -1,4 +1,8 @@
-import { Skill } from '@/types';
+export interface Skill {
+  name: string;
+  level: number;
+  icon: string;
+}
 
 export const skills: Skill[] = [
   { name: "Java", level: 90, icon: "☕" },
@@ -18,6 +22,6 @@ export const skills: Skill[] = [
   { name: "Eclipse/VS Code", level: 85, icon: "💻" },
   { name: "OOP Concepts", level: 90, icon: "🎯" },
   { name: "DBMS", level: 85, icon: "🗄️" },
-  { name: "REST APIs", level: 85, icon: "🔌" },
-  { name: "TypeScript", level: 85, icon: "📘" }
+   { name: "TypeScript", level: 85, icon: "📘" },
+  { name: "REST APIs", level: 85, icon: "🔌" }
 ];
