@@ -1,18 +1,9 @@
 'use client';
 
-import { FiBriefcase, FiCalendar, FiMapPin, FiAward, FiCode, FiDatabase, FiGlobe, FiSmartphone } from 'react-icons/fi';
+import { FiBriefcase, FiCalendar, FiMapPin, FiAward } from 'react-icons/fi';
 import { SITE_CONFIG } from '@/lib/constants';
 
 export default function AboutSection() {
-  const skills = {
-    languages: ["Java", "JavaScript", "TypeScript"],
-    frontend: ["HTML", "CSS", "Bootstrap", "React.js", "Next.js", "Tailwind CSS"],
-    backend: ["Servlet", "JDBC", "Spring Boot", "Hibernate", "REST APIs"],
-    database: ["MySQL"],
-    tools: ["Git", "GitHub", "VS Code", "Eclipse"],
-    concepts: ["OOP", "DBMS", "Data Structures"]
-  };
-
   const experiences = [
     {
       title: "Full Stack Developer",
@@ -77,7 +68,7 @@ export default function AboutSection() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Get to know me, my journey, skills, and what I bring to the table
+            Get to know me, my journey, and what I bring to the table
           </p>
         </div>
 
@@ -109,82 +100,6 @@ export default function AboutSection() {
               <div className="flex-shrink-0">
                 <div className="w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
                   <span className="text-5xl">👩‍💻</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Skills Section */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-shadow duration-300">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-              <FiCode className="text-blue-500" />
-              Technical Skills
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div>
-                <h4 className="font-semibold text-gray-700 mb-2">💻 Languages</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.languages.map((skill, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-gray-700 mb-2">🎨 Frontend</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.frontend.map((skill, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-purple-50 text-purple-600 rounded-lg text-sm font-medium">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-gray-700 mb-2">⚙️ Backend</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.backend.map((skill, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-green-50 text-green-600 rounded-lg text-sm font-medium">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-gray-700 mb-2">🗄️ Database</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.database.map((skill, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-orange-50 text-orange-600 rounded-lg text-sm font-medium">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-gray-700 mb-2">🛠️ Tools</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.tools.map((skill, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-red-50 text-red-600 rounded-lg text-sm font-medium">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-gray-700 mb-2">📚 Concepts</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.concepts.map((skill, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-sm font-medium">
-                      {skill}
-                    </span>
-                  ))}
                 </div>
               </div>
             </div>
