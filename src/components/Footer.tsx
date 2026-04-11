@@ -25,9 +25,9 @@ export default function Footer() {
           </div>
           
           {/* Copyright */}
-          <p className="text-gray-500 text-xs">
-            © {currentYear} {SITE_CONFIG.name}. All rights reserved.
-          </p>
+          <p className="text-gray-500 text-xs text-center">
+  Designed and Developed by <span className="text-gray-400">Resham</span> | Copyright © {currentYear} All rights reserved.
+</p>
         </div>
       </div>
     </footer>
