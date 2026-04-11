@@ -2,22 +2,29 @@
 
 import { useState } from 'react';
 import { projects } from '@/data/projects';
-import type { Project } from '@/types';
-import Image from 'next/image';
-import { FiGithub, FiExternalLink, FiCode } from 'react-icons/fi';
+import type { Project } from '@/data/projects';
+import { FiGithub, FiExternalLink, FiCode, FiFolder, FiEye } from 'react-icons/fi';
 
 export default function ProjectsSection() {
   const [filter, setFilter] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [visibleProjects, setVisibleProjects] = useState<number>(6);
   
   const categories = ['All', ...new Set(projects.map(p => p.category))];
   
   const filteredProjects = filter === 'All' 
     ? projects 
     : projects.filter(p => p.category === filter);
+  
+  const displayedProjects = filteredProjects.slice(0, visibleProjects);
+  const hasMore = visibleProjects < filteredProjects.length;
+
+  const loadMore = () => {
+    setVisibleProjects(prev => prev + 6);
+  };
 
   return (
-    <section id="projects" className="py-16 bg-white">
+    <section id="projects" className="py-16 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
         
         {/* Header */}
@@ -25,7 +32,7 @@ export default function ProjectsSection() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
             My Projects
           </h2>
-          <div className="w-16 h-0.5 bg-gray-300 mx-auto mb-4"></div>
+          <div className="w-16 h-0.5 bg-gray-400 mx-auto mb-4"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Here's a collection of my work. Each project represents different challenges and solutions.
           </p>
@@ -36,11 +43,14 @@ export default function ProjectsSection() {
           {categories.map(cat => (
             <button
               key={cat}
-              onClick={() => setFilter(cat)}
+              onClick={() => {
+                setFilter(cat);
+                setVisibleProjects(6);
+              }}
               className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
                 filter === cat 
                   ? 'bg-gray-800 text-white' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
               }`}
             >
               {cat}
@@ -49,87 +59,105 @@ export default function ProjectsSection() {
         </div>
         
         {/* Projects Grid */}
-        {filteredProjects.length === 0 ? (
+        {displayedProjects.length === 0 ? (
           <p className="text-center text-gray-500 py-10">No projects found.</p>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
-              <div
-                key={project.id}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
-              >
-                {/* Image */}
-                <div 
-                  className="relative h-48 bg-gray-100 cursor-pointer"
-                  onClick={() => setSelectedProject(project)}
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {displayedProjects.map((project) => (
+                <div
+                  key={project.id}
+                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow flex flex-col"
                 >
-                  {project.image ? (
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <FiCode className="text-4xl text-gray-400" />
-                    </div>
-                  )}
-                </div>
-                
-                {/* Content */}
-                <div className="p-5">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 
-                      className="text-lg font-semibold text-gray-800 cursor-pointer hover:text-gray-600"
-                      onClick={() => setSelectedProject(project)}
-                    >
-                      {project.title}
-                    </h3>
-                    <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
-                      {project.category}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.technologies.slice(0, 3).map((tech, idx) => (
-                      <span key={idx} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
-                        {tech}
+                  <div className="p-5 flex flex-col h-full">
+                    {/* Icon and Title */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <FiFolder className="text-gray-500 text-xl" />
+                        <h3 className="text-lg font-semibold text-gray-800">
+                          {project.title}
+                        </h3>
+                      </div>
+                      <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                        {project.category}
                       </span>
-                    ))}
+                    </div>
+                    
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
+                      {project.description}
+                    </p>
+                    
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.technologies.slice(0, 3).map((tech, idx) => (
+                        <span key={idx} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* Buttons */}
+                    <div className="flex gap-2 mt-auto">
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 border border-gray-300 text-gray-700 rounded-md text-sm hover:bg-gray-50 transition-colors"
+                      >
+                        <FiEye size={14} />
+                        View More
+                      </button>
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gray-800 text-white rounded-md text-sm hover:bg-gray-900 transition-colors"
+                      >
+                        <FiGithub size={14} />
+                        GitHub
+                      </a>
+                    </div>
                   </div>
-                  
-                  {/* GitHub Button */}
-                  <a
-                    href={project.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-md text-sm hover:bg-gray-900 transition-colors w-full justify-center"
-                  >
-                    <FiGithub size={16} />
-                    View Code on GitHub
-                  </a>
                 </div>
+              ))}
+            </div>
+            
+            {/* Load More Button */}
+            {hasMore && (
+              <div className="text-center mt-10">
+                <button
+                  onClick={loadMore}
+                  className="px-6 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors"
+                >
+                  View More Projects
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
 
-      {/* Modal */}
+      {/* Project Details Modal */}
       {selectedProject && (
         <div
           className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+            className="bg-white rounded-lg max-w-2xl w-full max-h-[85vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
-              <h3 className="text-xl font-semibold text-gray-800">{selectedProject.title}</h3>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800">{selectedProject.title}</h3>
+                <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded mt-1 inline-block">
+                  {selectedProject.category}
+                </span>
+              </div>
               <button
                 onClick={() => setSelectedProject(null)}
                 className="text-gray-400 hover:text-gray-600 text-2xl"
@@ -139,35 +167,22 @@ export default function ProjectsSection() {
             </div>
             
             <div className="p-5">
-              {/* Image */}
-              <div className="relative h-56 rounded-lg overflow-hidden mb-4 bg-gray-100">
-                {selectedProject.image ? (
-                  <Image
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <FiCode className="text-5xl text-gray-400" />
-                  </div>
-                )}
+              {/* Full Description */}
+              <div className="mb-4">
+                <h4 className="font-semibold text-gray-800 mb-2">Description</h4>
+                <p className="text-gray-600 leading-relaxed">
+                  {selectedProject.fullDescription || selectedProject.description}
+                </p>
               </div>
               
-              {/* Description */}
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                {selectedProject.description}
-              </p>
-              
-              {/* Features */}
+              {/* Key Features */}
               {selectedProject.features && selectedProject.features.length > 0 && (
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-800 mb-2">Key Features:</h4>
                   <ul className="space-y-1">
                     {selectedProject.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-gray-600 text-sm">
-                        <span className="text-gray-400 mt-0.5">•</span>
+                        <span className="text-green-500 mt-0.5">✓</span>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -195,7 +210,7 @@ export default function ProjectsSection() {
                   rel="noopener noreferrer"
                   className="flex-1 px-4 py-2 bg-gray-800 text-white rounded-md text-sm hover:bg-gray-900 transition flex items-center justify-center gap-2"
                 >
-                  <FiGithub size={16} /> View Code
+                  <FiGithub size={16} /> View Source Code
                 </a>
                 {selectedProject.liveLink && (
                   <a
