@@ -19,7 +19,7 @@ export default function ContactSection() {
         </div>
         
         {/* Contact Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
           
           {/* Phone */}
           <div className="text-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition">
