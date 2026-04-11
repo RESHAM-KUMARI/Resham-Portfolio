@@ -1,4 +1,3 @@
-
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import SkillsSection from '@/components/SkillsSection';
@@ -7,26 +6,26 @@ import ContactSection from '@/components/ContactSection';
 
 export default function HomePage() {
   return (
-    <>
-      <section id="home">
+    <main>
+      <div id="home">
         <HeroSection />
-      </section>
+      </div>
       
-      <section id="about">
+      <div id="about">
         <AboutSection />
-      </section>
+      </div>
       
-      <section id="skills">
+      <div id="skills">
         <SkillsSection />
-      </section>
-
-      <section id="projects">
-        <ProjectsSection />
-      </section>
+      </div>
       
-      <section id="contact">
+      <div id="projects">
+        <ProjectsSection />
+      </div>
+      
+      <div id="contact">
         <ContactSection />
-      </section>
-    </>
+      </div>
+    </main>
   );
 }
