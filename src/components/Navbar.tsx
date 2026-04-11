@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { SITE_CONFIG } from '@/lib/constants';
-import { FiMenu, FiX, FiHome, FiUser, FiFolder, FiMail } from 'react-icons/fi';
+import { FiMenu, FiX, FiHome, FiUser, FiFolder, FiMail, FiCode} from 'react-icons/fi';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +79,7 @@ export default function Navbar() {
   const navItems = [
     { name: "Home", id: "home", icon: FiHome, action: handleHomeClick },
     { name: "About", id: "about", icon: FiUser, action: () => handleNavigation('about') },
+    { name: "Skills", id: "skills", icon: FiCode, action: () => handleNavigation('skills') },
     { name: "Projects", id: "projects", icon: FiFolder, action: () => handleNavigation('projects') },
     { name: "Contact", id: "contact", icon: FiMail, action: () => handleNavigation('contact') },
   ];

@@ -16,7 +16,9 @@ export default function HomePage() {
         <AboutSection />
       </section>
       
-      <SkillsSection />
+      <section id="skills">
+        <SkillsSection />
+      </section>
 
       <section id="projects">
         <ProjectsSection />
