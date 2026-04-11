@@ -14,7 +14,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    title: "KK Legal Support",
+    title: "Legal Support",
     description: "Professional legal assistance services including compliance, contracts, and documentation support.",
     image: "",
     technologies: ["Java", "Spring Boot", "React.js", "MySQL"],
@@ -62,7 +62,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    title: "KK Padho India",
+    title: "Padho India",
     description: "Educational platform for Indian students with career guidance and exam preparation.",
     image: "",
     technologies: ["Java", "React.js", "Spring Boot", "MySQL"],
@@ -94,7 +94,7 @@ export const projects: Project[] = [
   },
   {
     id: 6,
-    title: "KK Tuition Website",
+    title: "Tuition Website",
     description: "Platform connecting students with qualified tutors for personalized learning.",
     image: "",
     technologies: ["Java", "JSP", "Servlet", "JDBC", "MySQL"],
@@ -110,7 +110,7 @@ export const projects: Project[] = [
   },
   {
     id: 7,
-    title: "MKK Online Alliance",
+    title: "Online Alliance",
     description: "Cross-platform mobile and web application development platform.",
     image: "",
     technologies: ["React Native", "Java", "Spring Boot", "MySQL"],
