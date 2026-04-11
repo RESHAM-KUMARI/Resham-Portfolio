@@ -29,7 +29,7 @@ export default function ProjectsSection() {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-500 mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
             My Projects
           </h2>
           <div className="w-16 h-0.5 bg-gray-300 mx-auto mb-4"></div>
@@ -115,7 +115,7 @@ export default function ProjectsSection() {
                         href={project.githubLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gray-800 text-white rounded-full text-sm hover:bg-gray-900 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-green-500 text-white rounded-full text-sm hover:bg-gray-900 transition-colors"
                       >
                         <FiGithub size={14} />
                         GitHub
