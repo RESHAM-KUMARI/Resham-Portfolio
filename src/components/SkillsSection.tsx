@@ -1,7 +1,7 @@
 'use client';
 
 import { skills } from '@/data/skills';
-import { FiCode, FiMonitor, FiServer, FiDatabase, FiTool, FiBook, FiCpu, FiZap } from 'react-icons/fi';
+import { FiCode, FiMonitor, FiServer, FiDatabase, FiTool, FiBook, FiCpu, FiZap, FiActivity } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 export default function SkillsSection() {
@@ -12,6 +12,15 @@ export default function SkillsSection() {
   const database = skills.filter(s => ["MySQL"].includes(s.name));
   const tools = skills.filter(s => ["Git/GitHub", "Eclipse/VS Code"].includes(s.name));
   const concepts = skills.filter(s => ["OOP Concepts", "DBMS"].includes(s.name));
+  
+  // AI Skills - Simple
+  const aiSkills = [
+    { name: "Machine Learning" },
+    { name: "Deep Learning" },
+    { name: "Natural Language Processing" },
+    { name: "Computer Vision" },
+    { name: "Python for AI" }
+  ];
 
   const skillCategories = [
     {
@@ -53,6 +62,16 @@ export default function SkillsSection() {
       text: "text-orange-600",
       iconBg: "bg-orange-100",
       badge: "bg-orange-100 text-orange-700"
+    },
+    {
+      title: "AI & ML",
+      icon: <FiActivity size={24} />,
+      skills: aiSkills,
+      gradient: "from-violet-500 to-purple-600",
+      bg: "from-violet-50 to-purple-50",
+      text: "text-violet-600",
+      iconBg: "bg-violet-100",
+      badge: "bg-violet-100 text-violet-700"
     },
     {
       title: "Tools",
