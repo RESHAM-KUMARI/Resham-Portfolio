@@ -148,7 +148,7 @@ export default function Navbar() {
       >
         <div className="flex flex-col h-full">
           <div className="flex justify-between items-center p-5 border-b border-gray-100">
-            <span className="text-lg font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+            <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
               Menu
             </span>
             <button onClick={() => setIsOpen(false)} className="p-1 text-gray-400 hover:text-emerald-600">
