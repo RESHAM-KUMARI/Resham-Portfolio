@@ -86,15 +86,15 @@ export default function Navbar() {
       <nav 
         className={`fixed top-0 w-full z-50 transition-all duration-300 h-16 ${
           scrolled 
-            ? 'bg-white/95 backdrop-blur-md shadow-lg' 
-            : 'bg-white backdrop-blur-sm'
+            ? 'bg-white/95 backdrop-blur-md shadow-md' 
+            : 'bg-white/90 backdrop-blur-sm'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex justify-between items-center h-full">
             <button 
               onClick={handleHomeClick}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
+              className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent"
             >
               {SITE_CONFIG.name.split(' ')[0]}
             </button>
@@ -111,11 +111,11 @@ export default function Navbar() {
                     onClick={item.action}
                     className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                       isActive
-                        ? 'text-blue-600 bg-blue-50'
-                        : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                        ? 'text-emerald-600 bg-emerald-50'
+                        : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50'
                     }`}
                   >
-                    <Icon className={`text-lg ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
+                    <Icon className={`text-lg ${isActive ? 'text-emerald-600' : 'text-gray-500'}`} />
                     <span>{item.name}</span>
                   </button>
                 );
@@ -124,7 +124,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+              className="md:hidden p-2 rounded-lg text-gray-600 hover:text-emerald-600 hover:bg-gray-100"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
@@ -135,7 +135,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div 
-        className={`fixed inset-0 bg-black/50 transition-all duration-300 md:hidden z-40 ${
+        className={`fixed inset-0 bg-black/30 backdrop-blur-sm transition-all duration-300 md:hidden z-40 ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         onClick={() => setIsOpen(false)}
@@ -147,9 +147,11 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex justify-between items-center p-5 border-b">
-            <span className="text-lg font-bold text-gray-800">Menu</span>
-            <button onClick={() => setIsOpen(false)} className="p-1 text-gray-400 hover:text-gray-600">
+          <div className="flex justify-between items-center p-5 border-b border-gray-100">
+            <span className="text-lg font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+              Menu
+            </span>
+            <button onClick={() => setIsOpen(false)} className="p-1 text-gray-400 hover:text-emerald-600">
               <FiX size={20} />
             </button>
           </div>
@@ -167,13 +169,13 @@ export default function Navbar() {
                       item.action();
                       setIsOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                       isActive
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-gray-600 hover:bg-gray-50'
+                        ? 'bg-emerald-50 text-emerald-600'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-emerald-600'
                     }`}
                   >
-                    <Icon className={`text-lg ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
+                    <Icon className={`text-lg ${isActive ? 'text-emerald-600' : 'text-gray-500'}`} />
                     <span>{item.name}</span>
                   </button>
                 );
@@ -181,7 +183,7 @@ export default function Navbar() {
             </div>
           </div>
           
-          <div className="p-4 border-t">
+          <div className="p-4 border-t border-gray-100">
             <p className="text-xs text-center text-gray-400">
               © {new Date().getFullYear()} {SITE_CONFIG.name}
             </p>
