@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { projects } from '@/data/projects';
 import type { Project } from '@/data/projects';
-import { FiGithub, FiExternalLink, FiFolder, FiEye } from 'react-icons/fi';
+import { FiGithub, FiExternalLink, FiFolder, FiEye, FiCode, FiArrowRight } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ProjectsSection() {
   const [filter, setFilter] = useState<string>('All');
@@ -23,23 +24,52 @@ export default function ProjectsSection() {
     setVisibleProjects(prev => prev + 6);
   };
 
+  // Color schemes
+  const colors = {
+    primary: {
+      from: 'from-purple-600',
+      to: 'to-pink-600',
+      solid: 'bg-gradient-to-r from-purple-600 to-pink-600',
+      light: 'from-purple-50 to-pink-50',
+      text: 'text-purple-600',
+      bg: 'bg-purple-50',
+      border: 'border-purple-200',
+      hover: 'hover:from-purple-700 hover:to-pink-700'
+    }
+  };
+
   return (
-    <section id="projects" className="py-16 bg-white">
+    <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 via-white to-purple-50/30">
       <div className="max-w-6xl mx-auto px-4">
         
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
-            My Projects
+        {/* Header with Animation */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-block mb-4">
+            <span className="text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 uppercase tracking-wider">
+              Portfolio
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-4">
+            Featured Projects
           </h2>
-          <div className="w-16 h-0.5 bg-gray-300 mx-auto mb-4"></div>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            Here's a collection of my work. Each project represents different challenges and solutions.
+          <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-6 rounded-full"></div>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+            Crafting digital experiences with modern technologies and creative solutions
           </p>
-        </div>
+        </motion.div>
         
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {/* Filter Buttons - Modern Design */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
           {categories.map(cat => (
             <button
               key={cat}
@@ -47,186 +77,224 @@ export default function ProjectsSection() {
                 setFilter(cat);
                 setVisibleProjects(6);
               }}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
                 filter === cat 
-                  ? 'bg-blue-500 text-white' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25' 
+                  : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm border border-gray-200'
               }`}
             >
               {cat}
             </button>
           ))}
-        </div>
+        </motion.div>
         
         {/* Projects Grid */}
         {displayedProjects.length === 0 ? (
           <p className="text-center text-gray-500 py-10">No projects found.</p>
         ) : (
           <>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayedProjects.map((project) => (
-                <div
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayedProjects.map((project, index) => (
+                <motion.div
                   key={project.id}
-                  className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -8 }}
+                  className="group"
                 >
-                  <div className="p-5 flex flex-col h-full">
-                    {/* Icon and Title */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <FiFolder className="text-blue-500 text-xl" />
-                        <h3 className="text-lg font-semibold text-gray-800">
-                          {project.title}
-                        </h3>
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
+                    
+                    {/* Card Header with Gradient */}
+                    <div className="relative h-48 bg-gradient-to-br from-purple-600 via-purple-500 to-pink-600 overflow-hidden">
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300"></div>
+                      <div className="absolute top-4 right-4">
+                        <span className="text-xs px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full font-medium">
+                          {project.category}
+                        </span>
                       </div>
-                      <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">
-                        {project.category}
-                      </span>
+                      <div className="absolute bottom-4 left-4">
+                        <FiFolder className="text-white text-5xl opacity-20 group-hover:opacity-30 transition-all duration-300" />
+                      </div>
                     </div>
                     
-                    {/* Description */}
-                    <p className="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">
-                      {project.description}
-                    </p>
-                    
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.technologies.slice(0, 3).map((tech, idx) => (
-                        <span key={idx} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full">
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full">
-                          +{project.technologies.length - 3}
-                        </span>
-                      )}
-                    </div>
-                    
-                    {/* Buttons */}
-                    <div className="flex gap-2 mt-auto">
-                      <button
-                        onClick={() => setSelectedProject(project)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 border border-gray-300 text-gray-600 rounded-full text-sm hover:bg-gray-50 transition-colors"
-                      >
-                        <FiEye size={14} />
-                        View
-                      </button>
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-green-500 text-white rounded-full text-sm hover:bg-gray-900 transition-colors"
-                      >
-                        <FiGithub size={14} />
-                        GitHub
-                      </a>
+                    {/* Card Content */}
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 transition-all duration-300">
+                        {project.title}
+                      </h3>
+                      
+                      <p className="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow leading-relaxed">
+                        {project.description}
+                      </p>
+                      
+                      {/* Technologies */}
+                      <div className="flex flex-wrap gap-2 mb-5">
+                        {project.technologies.slice(0, 3).map((tech, idx) => (
+                          <span key={idx} className="text-xs px-2.5 py-1 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-600 rounded-full font-medium">
+                            {tech}
+                          </span>
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <span className="text-xs px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full font-medium">
+                            +{project.technologies.length - 3}
+                          </span>
+                        )}
+                      </div>
+                      
+                      {/* Buttons */}
+                      <div className="flex gap-3 mt-auto">
+                        <button
+                          onClick={() => setSelectedProject(project)}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-purple-200 text-purple-600 rounded-xl text-sm font-semibold hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 hover:text-white hover:border-transparent transition-all duration-300"
+                        >
+                          <FiEye size={16} />
+                          Preview
+                        </button>
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-gray-500/25 transition-all duration-300"
+                        >
+                          <FiCode size={16} />
+                          Github
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
             
             {/* Load More Button */}
             {hasMore && (
-              <div className="text-center mt-10">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+                className="text-center mt-12"
+              >
                 <button
                   onClick={loadMore}
-                  className="px-6 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-900 transition-colors"
+                  className="group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
                 >
-                  View More Projects
+                  <span>Explore More Projects</span>
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
-              </div>
+              </motion.div>
             )}
           </>
         )}
       </div>
 
-      {/* Project Details Modal */}
-      {selectedProject && (
-        <div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedProject(null)}
-        >
-          <div
-            className="bg-white rounded-xl max-w-2xl w-full max-h-[85vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
+      {/* Project Details Modal - Modern Design */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedProject(null)}
           >
-            <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center rounded-t-xl">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">{selectedProject.title}</h3>
-                <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full mt-1 inline-block">
-                  {selectedProject.category}
-                </span>
-              </div>
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="text-gray-400 hover:text-gray-600 text-2xl"
-              >
-                ×
-              </button>
-            </div>
-            
-            <div className="p-5">
-              {/* Full Description */}
-              <div className="mb-4">
-                <h4 className="font-semibold text-gray-800 mb-2">Description</h4>
-                <p className="text-gray-500 leading-relaxed text-sm">
-                  {selectedProject.fullDescription || selectedProject.description}
-                </p>
-              </div>
-              
-              {/* Key Features */}
-              {selectedProject.features && selectedProject.features.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">Key Features</h4>
-                  <ul className="space-y-1">
-                    {selectedProject.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-gray-500 text-sm">
-                        <span className="text-green-500 mt-0.5">✓</span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {/* Technologies */}
-              <div className="mb-4">
-                <h4 className="font-semibold text-gray-800 mb-2">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.technologies.map((tech, idx) => (
-                    <span key={idx} className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
-                      {tech}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white rounded-t-2xl">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">{selectedProject.title}</h3>
+                    <span className="text-xs px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full inline-block">
+                      {selectedProject.category}
                     </span>
-                  ))}
+                  </div>
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="text-white/80 hover:text-white text-3xl leading-none transition-colors"
+                  >
+                    ×
+                  </button>
                 </div>
               </div>
               
-              {/* Links */}
-              <div className="flex gap-3 pt-3 border-t">
-                <a
-                  href={selectedProject.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-gray-800 text-white rounded-full text-sm hover:bg-gray-900 transition flex items-center justify-center gap-2"
-                >
-                  <FiGithub size={16} /> Code
-                </a>
-                {selectedProject.liveLink && (
+              {/* Modal Content */}
+              <div className="p-6">
+                {/* Description */}
+                <div className="mb-6">
+                  <h4 className="font-bold text-gray-800 mb-3 text-lg flex items-center gap-2">
+                    <span className="w-1 h-6 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></span>
+                    Description
+                  </h4>
+                  <p className="text-gray-600 leading-relaxed">
+                    {selectedProject.fullDescription || selectedProject.description}
+                  </p>
+                </div>
+                
+                {/* Key Features */}
+                {selectedProject.features && selectedProject.features.length > 0 && (
+                  <div className="mb-6">
+                    <h4 className="font-bold text-gray-800 mb-3 text-lg flex items-center gap-2">
+                      <span className="w-1 h-6 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></span>
+                      Key Features
+                    </h4>
+                    <div className="grid gap-2">
+                      {selectedProject.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-start gap-3 text-gray-600">
+                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mt-2"></div>
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Technologies */}
+                <div className="mb-6">
+                  <h4 className="font-bold text-gray-800 mb-3 text-lg flex items-center gap-2">
+                    <span className="w-1 h-6 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></span>
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.technologies.map((tech, idx) => (
+                      <span key={idx} className="text-xs px-3 py-1.5 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-600 rounded-full font-medium">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Links */}
+                <div className="flex gap-3 pt-4 border-t border-gray-100">
                   <a
-                    href={selectedProject.liveLink}
+                    href={selectedProject.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-600 rounded-full text-sm hover:bg-gray-50 transition flex items-center justify-center gap-2"
+                    className="flex-1 px-5 py-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                   >
-                    <FiExternalLink size={16} /> Live Demo
+                    <FiGithub size={18} /> View Code
                   </a>
-                )}
+                  {selectedProject.liveLink && (
+                    <a
+                      href={selectedProject.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 px-5 py-3 border-2 border-purple-200 text-purple-600 rounded-xl text-sm font-semibold hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 hover:text-white hover:border-transparent transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <FiExternalLink size={18} /> Live Demo
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
