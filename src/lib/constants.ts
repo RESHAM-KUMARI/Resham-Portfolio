@@ -1,5 +1,5 @@
 export const SITE_CONFIG = {
-  name: "Your Name",
+  name: "Resham",
   title: "Full Stack Developer",
   email: "your.email@gmail.com",
   github: "https://github.com/yourusername",
